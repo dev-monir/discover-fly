@@ -120,3 +120,11 @@ nav ul li a:hover, a.active{
     display: flex;
     justify-content: space-between;
 }
+.pointer{
+    cursor: pointer;
+    padding: 0px 10px;
+}
+.pointer:hover{
+    background-color: #ddd;
+    border-radius: 5px;
+}
