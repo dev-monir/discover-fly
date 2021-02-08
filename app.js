@@ -1,78 +1,77 @@
 // first ticket increase
 const firstClassIncrease = document.getElementById('firstClass-increase');
-var firstCounterNumber=0;
-firstClassIncrease.addEventListener('click', function(){
-    counterNumberHandle('first', true); 
+var firstCounterNumber = 0;
+firstClassIncrease.addEventListener('click', function () {
+    counterNumberHandle('first', true);
 
 })
 
 // first ticket decrease 
 
 const firstClassDecrease = document.getElementById('firstClass-decrease');
-var firstCounterNumber=0;
-firstClassDecrease.addEventListener('click', function(){
+var firstCounterNumber = 0;
+firstClassDecrease.addEventListener('click', function () {
     counterNumberHandle('first', false);
-    
+
 })
 
 //increase economy
 const economyIncrease = document.getElementById('economy-increase')
-economyIncrease.addEventListener('click', function(){
+economyIncrease.addEventListener('click', function () {
     counterNumberHandle('economy', true);
 })
 
 //decrease economy
 const economyDecrease = document.getElementById('economy-decrease')
-economyDecrease.addEventListener('click', function(){
+economyDecrease.addEventListener('click', function () {
     counterNumberHandle('economy', false);
 })
+/*let firstCount = 0;
+let economyCount = 0;*/
+let firstValue = 0
+let economyValue = 0;
+let finalTotal=0;
+function counterNumberHandle(ticket, isIncrease) {
+    const firstCounter = document.getElementById(ticket + '-counter');
+    if (isIncrease == true) {
+        if (ticket === "first") {
+            firstValue++;
+            //firstCount = firstValue;
+            firstCounter.value = firstValue;
 
-function counterNumberHandle(ticket, isIncrease){
-    const firstCounter= document.getElementById(ticket + '-counter');
-    var firstCounterNumber=0;
-    if(firstCounter.value==="")
-    {
-        firstCounterNumber=0;
-    }
-    else
-    {
-        firstCounterNumber = parseFloat(firstCounter.value);
-    }
-    
-    let totalNumber = firstCounterNumber;
-    if(isIncrease==true){
-        totalNumber = firstCounterNumber + 1
-    }
-    if(isIncrease==false && totalNumber>0){
-        totalNumber = firstCounterNumber - 1
-    }
-    firstCounter.value = totalNumber;
+        }
 
-    const ticketPrice = document.getElementById(ticket + '-price');
-    let increasePrice = ticketPrice;
-    if (ticket == 'first') {
-        increasePrice = totalNumber * 150;
+        else {
+            economyValue++;
+            
+            firstCounter.value = economyValue;
+        }
+        
     }
-    if (ticket =='economy') {
-        increasePrice = totalNumber * 100;
+    else {
+        if (ticket === "first" && firstValue > 0) {
+            firstValue--;
+            
+            firstCounter.value = firstValue;
+
+        }
+
+        else if (ticket === "economy" && economyValue > 0) {
+            economyValue--;
+           
+            firstCounter.value = economyValue;
+        }
+        
     }
-    ticketPrice.innerText = increasePrice;
-    calculationHandle();
+    let totalPrice = firstValue * 150 + economyValue * 100;
+    let tax = (totalPrice*10)/100;
+    finalTotal=totalPrice+tax;
+    document.getElementById("total-price").innerText = totalPrice
+    document.getElementById("total-tax").innerText =tax;
+    document.getElementById("final-price").innerText = finalTotal;
 }
-//calculation
-function calculationHandle() {
-    const firstClassTicketPrice = getInputPrice('first');
-    const economyTicketPrice = getInputPrice('economy');
-    const total = firstClassTicketPrice + economyTicketPrice;
-    document.getElementById('total-price').innerText = total;
-    const tax = Math.round(total * .1);
-    document.getElementById('total-tax').innerText = tax;
-    const grandTotal = total + tax;
-    document.getElementById('final-price').innerText = grandTotal; 
+function bookClick(){
+    alert("Total Number of Tickets\nFirst Class="+firstValue+"\nEconomy Class="+economyValue+"\nTotal Cost="+finalTotal)
 }
 
-function getInputPrice(ticket) {
-    const ticketPrice = document.getElementById(ticket + '-price');
-    const ticketPriceNumber = parseFloat(ticketPrice.innerText);
-    return ticketPriceNumber;
-}
+
